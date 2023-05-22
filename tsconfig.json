@@ -1,0 +1,9 @@
+{
+  // This is the base config that is extended by the others. It only contains
+  // a reference to the apps and packages that are part of the project.
+  // Define common compiler options in tsconfig.base.json to avoid circular references.
+
+  "extends": "./tsconfig.base.json",
+  "files": [],
+  "references": [{ "path": "./apps/client" }, { "path": "./packages/ui" }]
+}
