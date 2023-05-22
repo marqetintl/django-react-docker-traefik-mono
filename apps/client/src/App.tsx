@@ -1,9 +1,7 @@
-import { useState } from "react";
-import "./App.css";
+import { Counter } from '@miq/ui/components/counter';
+import './App.css';
 
-function App() {
-  const [count, setCount] = useState(0);
-
+export default function App() {
   return (
     <>
       <div>
@@ -18,8 +16,10 @@ function App() {
         </a>
       </div>
       <h1>Django + Vite + React</h1>
+
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
+        <Counter initialCount={1} />
+
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
@@ -28,5 +28,3 @@ function App() {
     </>
   );
 }
-
-export default App;
