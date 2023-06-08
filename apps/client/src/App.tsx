@@ -1,10 +1,11 @@
 import { Counter } from '@miq/ui/components/counter';
+
 import './App.css';
 
 export default function App() {
   return (
     <>
-      <div>
+      <div className="flex">
         <a href="https://www.djangoproject.com/" target="_blank">
           <img src="/media/django.svg" className="logo django" alt="Django logo" />
         </a>
