@@ -3,6 +3,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "~/*": ["./src/*"],
+      "~/routes/*": ["./src/routes/*"],
       "@miq/ui/*": ["../../packages/ui/src/*"]
     },
 
@@ -26,8 +28,5 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src"],
-  "references": [
-    { "path": "../../packages/ui/tsconfig.json" },
-    { "path": "./tsconfig.node.json" }
-  ]
+  "references": [{ "path": "../../packages/ui/tsconfig.json" }, { "path": "./tsconfig.node.json" }]
 }

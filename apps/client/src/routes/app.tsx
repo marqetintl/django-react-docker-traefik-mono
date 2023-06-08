@@ -2,7 +2,7 @@ import { Counter } from '@miq/ui/components/counter';
 
 import './App.css';
 
-export default function App() {
+export default function AppRoute() {
   return (
     <>
       <div className="flex">
