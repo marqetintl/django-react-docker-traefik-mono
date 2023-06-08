@@ -10,7 +10,7 @@
     <!-- prettier-ignore -->
     {% if DEBUG  %}
     <script type="module">
-      import RefreshRuntime from "http://react.localhost/@react-refresh";
+      import RefreshRuntime from '{{CLIENT_DEV_HOST}}/@react-refresh';
 
       RefreshRuntime.injectIntoGlobalHook(window);
       window.$RefreshReg$ = () => {};
@@ -18,8 +18,8 @@
       window.__vite_plugin_react_preamble_installed__ = true;
     </script>
 
-    <script type="module" src="http://react.localhost/@vite/client"></script>
-    <script type="module" src="http://react.localhost/src/main.tsx"></script>
+    <script type="module" src="{{CLIENT_DEV_HOST}}/@vite/client"></script>
+    <script type="module" src="{{CLIENT_DEV_HOST}}/src/main.tsx"></script>
     {% endif %}
   </head>
 
