@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Outlet, createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Outlet } from 'react-router-dom';
 
 import { PATHS } from '~/consts';
 

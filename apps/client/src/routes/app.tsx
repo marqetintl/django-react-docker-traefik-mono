@@ -1,6 +1,6 @@
-import { Counter } from '@miq/ui/components/counter';
+import './app.css';
 
-import './App.css';
+import { Counter } from '@miq/ui/components/counter';
 
 export default function AppRoute() {
   return (
