@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/media/django.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{% firstof title "Get in the flow" %} | Flowfocus</title>
+
+    {% comment %}
+    <!-- prettier-ignore -->
+    {% endcomment %}
+    {% if DEBUG  %}
+    <script type="module">
+      import RefreshRuntime from '{{CLIENT_DEV_HOST}}/@react-refresh';
+
+      RefreshRuntime.injectIntoGlobalHook(window);
+      window.$RefreshReg$ = () => {};
+      window.$RefreshSig$ = () => (type) => type;
+      window.__vite_plugin_react_preamble_installed__ = true;
+    </script>
+
+    <script type="module" src="{{CLIENT_DEV_HOST}}/@vite/client"></script>
+    <script type="module" src="{{CLIENT_DEV_HOST}}/src/main.tsx"></script>
+    {% endif %}
+  </head>
+
+  <body>
+    <div id="root"></div>
+
+    {% comment %}
+    <!-- prettier-ignore -->
+    {% endcomment %}
+    {% if sharedData %} {{ sharedData|json_script:"sharedData" }} {% endif %}
+  </body>
+</html>
