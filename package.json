@@ -1,13 +1,38 @@
 {
   "name": "django-react-docker-traefik-mono",
-  "packageManager": "yarn@3.4.1",
   "private": true,
   "workspaces": [
     "apps/*",
-    "packages/*"
+    "app-packages/*"
   ],
   "scripts": {
-    "client": "yarn workspace @miq/client"
+    "client": "yarn workspace @miq/client",
+    "ui": "yarn workspace @miq/ui"
   },
-  "author": "https://github.com/michaelgainyo"
+  "devDependencies": {
+    "@julr/unocss-preset-forms": "^0.0.5",
+    "@types/node": "^20.3.2",
+    "@types/react": "^18.0.37",
+    "@types/react-dom": "^18.0.11",
+    "@typescript-eslint/eslint-plugin": "^5.59.0",
+    "@typescript-eslint/parser": "^5.59.0",
+    "@unocss/eslint-config": "^0.52.7",
+    "@unocss/reset": "^0.51.4",
+    "@vitejs/plugin-react": "^4.0.0",
+    "eslint": "^8.38.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.3.4",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "typescript": "^5.0.4",
+    "unocss": "^0.52.5",
+    "vite": "^4.3.9",
+    "vite-plugin-compression2": "^0.9.1",
+    "vite-plugin-static-copy": "^0.15.0",
+    "vite-tsconfig-paths": "^4.2.0"
+  },
+  "author": "https://github.com/michaelgainyo",
+  "packageManager": "yarn@3.6.0",
+  "engines": {
+    "node": "18.0.0"
+  }
 }

@@ -21,6 +21,6 @@
     "verbatimModuleSyntax": true,
     "pretty": true
   },
-  "include": ["./.eslintrc.js"],
+  "include": ["./.eslintrc.cjs"],
   "exclude": ["**/node_modules", "**/.*/"]
 }

@@ -2,33 +2,31 @@ version: '3.8'
 
 volumes:
   postgres_data:
-  pgadmin_data: 
+  pgadmin_data:
 
 services:
-  web:
+  backend:
     build: .
-    command: sh -c 'while ! nc -z postgresdb 5432; do sleep 1; done; cd apps/server; python3 manage.py runserver 0.0.0.0:8000'
+    image: 'example/mono:dev'
+    command: sh -c 'while ! nc -z postgresdb 5432; do sleep 1; done; cd apps/backend; python3 manage.py runserver 0.0.0.0:8000'
     volumes:
-      - ./apps/server:/app/apps/server
+      - ./:/app
     expose:
       - 8000
+    env_file:
+      - ./.env
     environment:
-      - DEBUG=True
-      - CLIENT_DEV_HOST=${CLIENT_DEV_HOST}
-      - "DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgresdb:5432/${POSTGRES_DB}"
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgresdb:5432/${POSTGRES_DB}
     depends_on:
       - postgresdb
-      - client
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.django.rule=Host(`${BACKEND_HOST}`)"
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.django.rule=Host(`${BACKEND_HOST}`)'
 
   client:
     stdin_open: true
     build: .
-    volumes:
-      - ./apps/client:/app/apps/client
-      - /node_modules
+    image: 'example/mono:dev'
     command: sh -c 'yarn client dev'
     expose:
       - 5173
@@ -37,43 +35,45 @@ services:
     depends_on:
       - traefik
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.react.rule=Host(`${CLIENT_DEV_HOST}`)"
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.react.rule=Host(`${CLIENT_DEV_HOST}`)'
+    volumes_from:
+      - backend
 
   traefik:
     image: traefik:v2.10
     command:
-      - "--api.insecure=true"
-      - "--log.level=DEBUG"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
+      - '--api.insecure=true'
+      - '--log.level=INFO'
+      - '--providers.docker=true'
+      - '--providers.docker.exposedbydefault=false'
+      - '--entrypoints.web.address=:80'
     ports:
-      - "80:80"
-      - "8080:8080"
+      - '80:80'
+      - '8080:8080'
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - '/var/run/docker.sock:/var/run/docker.sock:ro'
 
   postgresdb:
     image: postgres:15-alpine
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    expose:
-      - 5432
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB}
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.services.postgres.loadbalancer.server.port=5432"
+      - 'traefik.enable=true'
+      - 'traefik.http.services.postgres.loadbalancer.server.port=5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    expose:
+      - 5432
 
   pgadmin:
     image: dpage/pgadmin4
     environment:
-      - PGADMIN_LISTEN_PORT=${PGADMIN_PORT}
-      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
-      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
+      - PGADMIN_LISTEN_PORT=5433
+      - PGADMIN_DEFAULT_EMAIL=admin@miq.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
     expose:
       - 5433
     volumes:
@@ -81,7 +81,7 @@ services:
     depends_on:
       - postgresdb
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.pgadmin.entrypoints=web"
-      - "traefik.http.routers.pgadmin.rule=Host(`${PGADMIN_HOST}`)"
-      - "traefik.http.services.pgadmin.loadbalancer.server.port=${PGADMIN_PORT}"
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.pgadmin.entrypoints=web'
+      - 'traefik.http.routers.pgadmin.rule=Host(`pgadmin.localhost`)'
+      - 'traefik.http.services.pgadmin.loadbalancer.server.port=5433'

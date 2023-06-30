@@ -34,11 +34,11 @@ RUN apt-get update && \
 # lint
 RUN pip3 install --upgrade pip
 # RUN pip3 install flake8==6.0.0
-COPY ./apps/server ./apps/server
+COPY ./apps/backend ./apps/backend
 # RUN flake8 --ignore=E501,F401 .
 
 # install python dependencies
-COPY ./apps/server/requirements.txt ./app/requirements.txt
+COPY ./apps/backend/requirements.txt ./app/requirements.txt
 RUN pip3 wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r ./app/requirements.txt
 
 
@@ -65,8 +65,8 @@ RUN pip install --upgrade pip
 RUN pip install --no-cache /wheels/*
 
 # copy project
-COPY ./apps/server $APP_HOME
-COPY --from=base /app/apps/server/templates/client $APP_HOME/templates/client
+COPY ./apps/backend $APP_HOME
+COPY --from=base /app/apps/backend/templates/client $APP_HOME/templates/client
 
 # chown all the files to the app user
 RUN chown -R app:app $APP_HOME

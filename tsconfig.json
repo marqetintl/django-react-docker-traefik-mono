@@ -5,5 +5,5 @@
 
   "extends": "./tsconfig.base.json",
   "files": [],
-  "references": [{ "path": "./apps/client" }, { "path": "./packages/ui" }]
+  "references": [{ "path": "./apps/client" }, { "path": "./app-packages/ui" }]
 }
