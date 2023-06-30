@@ -1,15 +1,16 @@
 
-dockerprodbuild:
-	docker-compose -f docker-compose.prod.yml build
+PHONY: dbuildmono
 
-dockerprodup:
-	docker-compose -f docker-compose.prod.yml up --build
+dup:
+	docker compose up --build
 
-dockerup:
-	docker-compose up --build
+dbuildmono:
+	docker build -f Dockerfile.mono.dev -t miq/mono:dev  .
 
-dockermigrate:
-	docker-compose -f docker-compose.prod.yml exec web python manage.py migrate --noinput
+dprune:
+	docker system prune -f
 
-dockerup:
-	docker-compose up --build
+dconfig:
+	docker compose config
+
+
